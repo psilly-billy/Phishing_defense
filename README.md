@@ -73,7 +73,7 @@ The motivation behind this project stemmed from personal experience, where phish
 This project is licensed under the MIT License.
 
 ## Contact
-For any questions or feedback, please reach out at your-email@example.com.
+For any questions or feedback, please reach out at m.iurea@gmail.com
 
 ---
 Stay tuned for the official link to the published Gmail add-on once it is approved!
