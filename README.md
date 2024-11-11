@@ -1,4 +1,4 @@
-# Phishing Analyzer - README
+# Phishing Analyzer 
 
 ## Overview
 Phishing Analyzer is a Gmail add-on designed to help users identify and analyze potentially malicious emails. Leveraging a fine-tuned model trained using Vertex AI and integrating the Gemini API, this tool classifies emails as either phishing or non-phishing and provides detailed explanations for its classifications. Additionally, it checks URLs against the PhishTank database to identify known phishing links. 
