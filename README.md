@@ -46,12 +46,16 @@ The motivation behind this project stemmed from personal experience, where phish
    - Navigate to [Google Apps Script](https://script.google.com/).
    - Create a new project and paste the content of `code.gs` into the script editor.
    - Copy the content of `appsscript.json` into the app's manifest file.
-
+     
 3. **Deploy the project**:
    - Save and deploy the script as a test add-on.
    - Enable the Gmail API and set up necessary OAuth scopes as specified in the `appsscript.json` file.
+     
+ Video Tutorial
+For a step-by-step demonstration on setting up and testing the Gmail add-on, please watch the following video:
+https://www.loom.com/share/c077182619a046c78a84d8305c8d9c98?sid=dd572c03-f0f3-42aa-9343-3f6429b61380
 
-4. **Run the backend server**:
+4. **optional - Run the backend server**:
    - Deploy the Flask server using Cloud Run or run it locally for development.
 
 ### Analyzing an Email
