@@ -23,6 +23,9 @@ def analyze_email():
             logger.error("Email content not provided.")
             return jsonify({"error": "Email content not provided"}), 400
         
+         # Log the raw email content for analysis
+       # logger.debug(f"Raw email content received: {email_content[:1000]}")
+        
         # Load the PhishTank data separately
         phishing_urls = load_phishtank_data()
 

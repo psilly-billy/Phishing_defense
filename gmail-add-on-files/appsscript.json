@@ -1,0 +1,38 @@
+{
+    "timeZone": "Etc/UTC",
+    "dependencies": {
+      "enabledAdvancedServices": [
+        {
+          "userSymbol": "Gmail",
+          "version": "v1",
+          "serviceId": "gmail"
+        }
+      ]
+    },
+    "exceptionLogging": "STACKDRIVER",
+    "oauthScopes": [
+      "https://www.googleapis.com/auth/gmail.addons.execute",
+      "https://www.googleapis.com/auth/gmail.readonly",
+      "https://www.googleapis.com/auth/gmail.modify",
+      "https://www.googleapis.com/auth/script.external_request"
+    ],
+    "gmail": {
+      "name": "Phishing Analyzer",
+      "logoUrl": "https://lh3.googleusercontent.com/d/1Fcw0eeG2Hm43tItTTAqQD9yXGCzWlOJV",
+      "contextualTriggers": [
+        {
+          "unconditional": {},
+          "onTriggerFunction": "buildAddOn"
+        }
+      ],
+      "primaryColor": "#4285F4",
+      "secondaryColor": "#34A853",
+      "openLinkUrlPrefixes": [
+        "https://",
+        "http://"
+      ]
+    },
+    "urlFetchWhitelist": [
+      "https://gh-submision.uc.r.appspot.com/analyze-email"
+    ]
+  }

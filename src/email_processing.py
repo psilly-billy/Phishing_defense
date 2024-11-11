@@ -2,7 +2,6 @@ import base64
 import re
 from src.phishing_detection import predict_phishing
 from src.phishtank import check_urls_against_phishtank
-from bs4 import BeautifulSoup
 
 def extract_urls(text):
     """Extracts URLs from the given text."""
@@ -10,33 +9,9 @@ def extract_urls(text):
     urls = url_pattern.findall(text)
     return urls
 
-def truncate_url(url, max_length=50):
-    """Truncates URLs if they exceed the maximum length."""
-    if len(url) > max_length:
-        return url[:max_length] + '... [truncated]'
-    return url
-
 def check_phishtank_results(urls, phishing_urls):
     """Checks URLs against PhishTank separately."""
     return check_urls_against_phishtank(urls, phishing_urls)
-
-def clean_email_content(email_content, max_length=2000):
-    """Preprocesses email content to simplify structure for model prediction."""
-    # Remove HTML tags and scripts using BeautifulSoup
-    soup = BeautifulSoup(email_content, 'html.parser')
-    for script in soup(['script', 'style', 'img', 'table']):
-        script.decompose()
-
-    # Get text content and clean unnecessary whitespace
-    cleaned_text = soup.get_text(separator=' ')
-    cleaned_text = re.sub(r'\s+', ' ', cleaned_text).strip()
-
-    # Truncate the content to a maximum length with key sentence extraction
-    if len(cleaned_text) > max_length:
-        sentences = cleaned_text.split('. ')
-        cleaned_text = '. '.join(sentences[:max_length // 100]) + '... [truncated]'
-
-    return cleaned_text
 
 def process_email(email_content, phishing_urls):
     """Processes a plain text email content for classification and returns the results."""
@@ -44,13 +19,9 @@ def process_email(email_content, phishing_urls):
         # Ensure the email content is non-empty
         if not email_content.strip():
             raise ValueError("Email content is invalid or empty.")
-
-        # Clean the email content to simplify structure
-        cleaned_content = clean_email_content(email_content)
         
-        # Extract URLs from the cleaned content and truncate them for logging/verification
-        urls = extract_urls(cleaned_content)
-        truncated_urls = [truncate_url(url) for url in urls]
+        # Extract URLs from the email content and check against PhishTank
+        urls = extract_urls(email_content)
         is_phishing_url = check_phishtank_results(urls, phishing_urls)
 
         # Classify based on URL check and model prediction
@@ -58,16 +29,15 @@ def process_email(email_content, phishing_urls):
             classification = 'phishing'
             explanation = 'The email contains a known phishing URL from PhishTank.'
         else:
-            print("The cleaned email content (first 500 chars):", cleaned_content[:500])  # Log truncated content for review
-            prediction = predict_phishing(cleaned_content)
+            print("The email content:", email_content[:500])  # Log truncated content for review
+            prediction = predict_phishing(email_content)
             classification, explanation = parse_model_response(prediction)
 
         return {
             'classification': classification,
             'explanation': explanation,
             'parsed_email': {
-                'body_text': cleaned_content,
-                'urls': truncated_urls  # Include for context but not sent to the model
+                'body_text': email_content
             }
         }
     except Exception as e:
