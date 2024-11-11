@@ -1,0 +1,19 @@
+# Virtual environment
+venv/
+__pycache__/
+*.pyc
+
+# VS Code settings
+.vscode/
+
+# Environment variables
+.env
+
+# Pytest cache
+.pytest_cache/
+
+# Credentials
+credentials.json
+config/
+
+token.pickle
