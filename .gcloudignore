@@ -15,3 +15,5 @@ __pycache__/
 # Credentials
 credentials.json
 config/
+
+.git

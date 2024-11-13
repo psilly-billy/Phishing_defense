@@ -7,7 +7,7 @@ from src.gemini_api import configure_gemini, generate_email_explanation
 app = Flask(__name__)
 
 # Configure logging
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.DEBUG)  # Set to DEBUG for more detailed output
 logger = logging.getLogger(__name__)
 
 # Initialize Gemini API chat session
@@ -23,27 +23,23 @@ def analyze_email():
             logger.error("Email content not provided.")
             return jsonify({"error": "Email content not provided"}), 400
         
-         # Log the raw email content for analysis
-       # logger.debug(f"Raw email content received: {email_content[:1000]}")
-        
-        # Load the PhishTank data separately
+        # Load PhishTank data
         phishing_urls = load_phishtank_data()
 
-        # Process the email content (returns parsed email, classification, and basic explanation)
+        # Process the email content
         email_result = process_email(email_content, phishing_urls)
-
-        # Extract specific details for explanation
+        
+        # Extract details for explanation
         classification_result = email_result.get('classification', 'Unknown')
         is_phishing_url_detected = 'Phishing URL detected' in email_result.get('explanation', '')
-        
-        # Generate detailed explanation using Gemini API
+
+        # Generate explanation using Gemini API
         explanation = generate_email_explanation(chat, email_content, classification_result, is_phishing_url_detected)
-        
-        # Add the generated explanation to the email result
         email_result['explanation'] = explanation
 
         logger.info(f"Email processed successfully: {email_result}")
         return jsonify(email_result), 200
+
     except Exception as e:
         logger.error(f"An error occurred: {e}", exc_info=True)
         return jsonify({
