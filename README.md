@@ -19,7 +19,7 @@ The motivation behind this project stemmed from personal experience, where phish
 - **Platforms**: Google Cloud Platform (GCP), Vertex AI, Google Workspace Add-ons
 - **Databases**: PhishTank for URL checking
 - **APIs**: Gemini API, Gmail API
-- **Deployment**: Cloud Run
+- **Deployment**: APP Engine
 
 ## How It Works
 1. The Gmail add-on app is installed and integrated with the user's Gmail account.
